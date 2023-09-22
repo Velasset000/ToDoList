@@ -1,0 +1,66 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+html {
+    height: 100%;
+    width: 100%
+}
+body {
+    height: 100%;
+    width: 100%;
+    background-color: #2C2C2C;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    background-color: #353A3F;
+    justify-content: space-between;
+    padding: .5vw 1vw .5vw 1vw;
+    color: white;
+}
+.mainContent {
+    flex-grow: 2;
+    background-color: white;
+}
+.top-container {
+    width: 100%;
+}
+.backgroundContainer {
+    margin: auto;
+    flex-grow: 1;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.leftnav {
+    background-color: #F8F9FA;
+    height: 100%;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 200px;
+    
+}
+.listCreate {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10%;
+}
+.leftnav input {
+    margin: 3px auto;
+    height: 30%;
+    width: 40%;
+    min-height: 18px;
+}
+.leftnav :nth-child(1){
+    width: 85%;
+    margin-right: 5px;
+}
+.listItem {
+    color: red;
+}
