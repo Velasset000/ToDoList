@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="script.js"></script>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script defer src="script.js"></script>
     <link type="text/css" rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,14 +17,20 @@
             <div class="leftnav">
                 <div class="listCreate">
                     <input class="listName" type="text" placeholder="Enter List Name..." name="listname">
-                    <input onclick="submitList()" type="submit" name="listname">
+                    <input class="listSubmit" onclick="addList()" type="submit" name="listname">
                 </div>
                 <div class="listItemsContainer">
                     
                 </div>
             </div>
             <div class="rightcontainer">
-        
+                <div class="toDoListName">
+                    Please Input New List.
+                    <div class="currentToDos">
+                        
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
