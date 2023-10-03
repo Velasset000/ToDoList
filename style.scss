@@ -79,3 +79,24 @@ header {
     text-align: center;
     width: 100%;
 }
+.toDoListName {
+    margin: 10px 50px;
+    padding-left: 10px;
+}
+.toDoListName > * {
+    margin-left: 30px;
+}
+.currentToDos > * {
+    border: 1px solid #929292;
+    padding: 10px;
+    margin: -1px 30px;
+    box-shadow:#929292;
+    text-align: left;
+}
+.toDoContainer {
+    display: flex;
+    justify-content: space-between;
+}
+.actionContainer > * {
+    padding: 0px 5px;
+}

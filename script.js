@@ -1,55 +1,98 @@
 
 const lists = []
-   let currentList;
-   var addIndex = (function(){
-    var index = -1;
-    return function (){return index += 1;}
-  })();
-  
+let currentList;
+let current;
+let newDiv;
 
-
-
+// let addToDo = function(){
+//   let newList = {
+//     name: document.querySelector('.listName').value,
+//     todos:[]
+//   }
+// }
+function markComplete(){
+  let checkbox = document.getElementById('checkbox');
+  if (checkbox.checked) {
+    console.log('checked')
+  }
+  else {
+    console.log('not checked')
+  }
+}
+function addToDo(){
+  // let newToDo
+   let toDoInput = document.querySelector('.toDoInput').value;
+   current.todos.push({'text': toDoInput, 'completed': false})
+   let toDoListDiv = "";
+   let checkbox = '<input type="checkbox" id="checkbox">'
+   current.todos.forEach((elm) => {toDoListDiv += '<div class="toDoContainer">' +
+    '<div>' + checkbox + '<span class="toDo">' + elm.text + '</span>' + '</div>' + 
+    '<span class="actionContainer"><i class="editButton fa-regular fa-pen-to-square"></i><i class="fa-solid fa-delete-left"></i></div>' + '</span>'})
+   document.querySelector('.currentToDos').innerHTML = toDoListDiv
+  document.querySelector('.toDoInput').value = ""
+  var editButton = document.querySelector('.editButton')
+  editButton.addEventListener('click', function (){
+  let currentEdit = this
+  let previousSib = this.parentElement.previousSibling.children[1]
+  console.log(currentEdit)
+  console.log(previousSib)
+  previousSib.contentEditable = true;
+  previousSib.style.backgroundColor = 'red'
+  previousSib.addEventListener('keypress', function(e){
+    if(e.key === 'Enter'){
+      console.log(current.todos)
+      previousSib.contentEditable = false;
+      previousSib.style.backgroundColor = 'white'
+    }
+  })
+})
+ }
 function addList(){
   let newList = {
     name: document.querySelector('.listName').value,
-    todos: [
-      {
-      text: '',
-      completed: false
-      }
-    ],
-     index: addIndex()
+    todos: []
   }
-  console.log(addIndex())
+  document.querySelector('.currentToDos').innerHTML = ""
   lists.push(newList);
   currentList = lists[0]
-  console.log(lists);
-  console.log(Object.values(newList))
   render();
   document.querySelectorAll('.listNameDisplay').forEach((elm) => {
     elm.addEventListener('click',function(){
+      
       if (document.getElementsByClassName('listItemClicked').length < 1) {
       this.classList.toggle('listItemClicked')
-      document.querySelector('.toDoListName').innerHTML = currentList.name + '<input class="toDoInput" type="tetx" placeholder="Enter To Do" name="toDo"></input>' + '<input class="toDoSubmit" type="submit" name="listname">';
-      console.log(this.textContent)
-      this.textContent 
+      current = lists.find(item => item.name === this.textContent);
+      document.querySelector('.toDoListName').innerHTML = current.name + 
+      '<input class="toDoInput" type="text" placeholder="Enter To Do" name="toDo"></input>' + 
+      '<input class="toDoSubmit" onclick="addToDo()" type="submit" name="listname">' + 
+      '<button class="markImportant" onClick="markComplete()"> Mark As Complete </button>';
+      let toDoListDiv = "";
+      let checkbox = '<input type="checkbox" id="checkbox">'
+      current.todos.forEach((elm) => {toDoListDiv += '<div class="toDoContainer">' +
+      '<div>' + checkbox + '<span>' + elm.text + '</span>' + '</div>' + 
+      '<span class="actionContainer"><i class="editButton fa-regular fa-pen-to-square"></i><i class="fa-solid fa-delete-left"></i></div>' + '</span>'})
+      document.querySelector('.currentToDos').innerHTML = toDoListDiv
+      document.querySelector('.toDoInput').value = ""
       }
       else {
         document.querySelector('.listItemClicked').classList.toggle('listItemClicked')
         this.classList.toggle('listItemClicked')
-        document.querySelector('.toDoListName').innerHTML = currentList.name + '<input class="toDoInput" type="tetx" placeholder="Enter To Do" name="toDo"></input>' + '<input class="toDoSubmit" type="submit" name="listname">';
-        console.log(this.textContent)
+        current = lists.find(item => item.name === this.textContent);
+        document.querySelector('.toDoListName').innerHTML = current.name + 
+        '<input class="toDoInput" type="text" placeholder="Enter To Do" name="toDo"></input>' + 
+        '<input class="toDoSubmit" onclick="addToDo()" type="submit" name="listname">'+ 
+        '<button class="markImportant" onClick="markComplete()"> Mark As Complete </button>';
+        let toDoListDiv = "";
+        let checkbox = '<input type="checkbox" id="checkbox">'
+        current.todos.forEach((elm) => {toDoListDiv += '<div class="toDoContainer">' +
+        '<div>' + checkbox + '<span>' + elm.text + '</span>' + '</div>' + 
+        '<span class="actionContainer"><i class="editButton fa-regular fa-pen-to-square"></i><i class="fa-solid fa-delete-left"></i></div>' + '</span>'})
+        document.querySelector('.currentToDos').innerHTML = toDoListDiv
+        document.querySelector('.toDoInput').value = ""
       }
     })
-
   })
 }
-  
-// var addIndex = (function(){
-//   var index = -1;
-//   return function (){return index += 1;}
-// })();
-
 
 
 function render() {
@@ -60,122 +103,22 @@ function render() {
     listsHtml += '</ul>';
     document.querySelector('.listItemsContainer').innerHTML = listsHtml;
     document.querySelector('.toDoListName').innerHTML = 'Select A List.'
-    
+    document.querySelector('.listName').value = ''
   }
 
 
 
-  // listItem.addEventListener('click', function(){
-  //   if (document.getElementsByClassName('listItemClicked').length < 1) {
-  //       this.classList.toggle('listItemClicked')
-  //       toDoList.innerHTML = ""
-  //       toDO.innerHTML = listName + '<input class="toDoItemInput" type="text" placeholder="Enter To Do..." name="todo"><input onClick="toDoAdd()" class="toDoItemCreateButton" type="submit" name="listname">'
-  //       createToDoList.innerHTML = '<input class="toDoItemInput" type="text" placeholder="Enter To Do..." name="todo"><input class="toDoItemCreateButton" type="submit" name="listname">'
-  //       toDoList.appendChild(toDO)
-  //   }
-  //   else {
-  //       document.querySelector('.listItemClicked').classList.toggle('listItemClicked')
-  //       this.classList.toggle('listItemClicked')
-  //       toDoList.innerHTML = ""
-  //       toDO.innerHTML = listName + '<input class="toDoItemInput" type="text" placeholder="Enter To Do..." name="todo"><input onClick="toDoAdd()" class="toDoItemCreateButton" type="submit" name="listname">'
-  //       toDoList.appendChild(toDO)
-  //   }
-  // })
 
 
-// document.querySelector('.listItemDisplay').addEventListener('click', function(){
-//   if (document.getElementsByClassName('listItemClicked').length < 1) {
-//       this.classList.toggle('listItemClicked')
-//   }
-//   else {
-//       document.querySelector('.listItemClicked').classList.toggle('listItemClicked')
-//       this.classList.toggle('listItemClicked')
-//       toDoList.innerHTML = ""
-//       toDO.innerHTML = listName
-//       toDoList.appendChild(toDO)
-//   }
-// })
+  //  var addIndex = (function(){
+  //   var index = -1;
+  //   return function (){return index += 1;}
+  // })();
 
 
 
-
-
-
-// function submitList(){
-//     let listName = document.querySelector('.listName').value;
-//     let listNameRest = document.querySelector('.listName');
-//     let listItemsContainer = document.querySelector('.listItemsContainer');
-//     let listItemArr = [];
-//     if (listName.length === 0){
-//         alert ('Please input the name of your list')
-//     }
-//     else {
-//     let listItem = document.createElement('div');
-//         listItem.classList.add('listItem');
-//         listItem.textContent = listName;
-//         listItemArr.push(listName);
-//         listItemsContainer.appendChild(listItem);
-//         listNameRest.value = "";
-//     let toDoList = document.querySelector('.toDoList')
-//     let toDO = document.createElement('div')
-//         toDO.classList.add('toDoItemHeader')
-//     let createToDoList = document.createElement('div')
-//         createToDoList.classList.add('createList')
-//         listItem.addEventListener('click', function(){
-//             if (document.getElementsByClassName('listItemClicked').length < 1) {
-//                 this.classList.toggle('listItemClicked')
-//                 toDoList.innerHTML = ""
-//                 toDO.innerHTML = listName
-//                 createToDoList.innerHTML = '<div>'
-//                 toDoList.appendChild(toDO)
-
-//             }
-//             else {
-//                 document.querySelector('.listItemClicked').classList.toggle('listItemClicked')
-//                 this.classList.toggle('listItemClicked')
-//                 toDoList.innerHTML = ""
-//                 toDO.innerHTML = listName
-//                 toDoList.appendChild(toDO)
-//             }
-//         })
-//     }
-// }
-
-
-// function render() {
-//     // this will hold the html that will be displayed in the sidebar
-//     let listsHtml = '<ul class="list-group">';
-//     // iterate through the lists to get their names
-//     lists.forEach((list) => {
-//       listsHtml += `<li class="list-group-item">${list.name}</li>`;
-//     });
-   
-//     listsHtml += '</ul>';
-//     // print out the lists
-   
-//     document.getElementById('lists').innerHTML = listsHtml;
-//     // print out the name of the current list
-   
-//     document.getElementById('current-list-name').innerText = currentList.name;
-//     // iterate over the todos in the current list
-   
-//     let todosHtml = '<ul class="list-group-flush">';
-//     currentList.todos.forEach((list) => {
-//       todosHtml += `<li class="list-group-item">${todo.text}</li>`;
-//     });
-//     // print out the todos
-//     document.getElementById('current-list-todos').innerHTML = todosHtml;
-//    }
-
-
-// document.querySelectorAll('.listNameDisplay').forEach((elm) => {
-//   if (elm.classList.contains('.listItemClicked')){
-//     let test = true;
-//     console.log(test)
-//   }
-//   else {
-//     let test = false;
-//     console.log(test)
-    
-//   }
-// })
+  // newToDo = document.createElement('div')
+  // let toDoListText = elm.text
+  // newToDo.textContent = toDoListText;
+  // toDoListDiv = '<div class="toDoListItem">' + toDoListText + '<div>'
+  // console.log(elm.text)
