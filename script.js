@@ -3,7 +3,14 @@ const lists = []
 let currentList;
 let current;
 let newDiv;
-
+const counter = index();
+function index() {
+    let count = 0;
+    return function(){
+      count++ 
+      return count
+    } 
+}
 // let addToDo = function(){
 //   let newList = {
 //     name: document.querySelector('.listName').value,
@@ -30,22 +37,27 @@ function addToDo(){
     '<span class="actionContainer"><i class="editButton fa-regular fa-pen-to-square"></i><i class="fa-solid fa-delete-left"></i></div>' + '</span>'})
    document.querySelector('.currentToDos').innerHTML = toDoListDiv
   document.querySelector('.toDoInput').value = ""
-  var editButton = document.querySelector('.editButton')
-  editButton.addEventListener('click', function (){
-  let currentEdit = this
-  let previousSib = this.parentElement.previousSibling.children[1]
-  console.log(currentEdit)
-  console.log(previousSib)
-  previousSib.contentEditable = true;
-  previousSib.style.backgroundColor = 'red'
-  previousSib.addEventListener('keypress', function(e){
-    if(e.key === 'Enter'){
-      console.log(current.todos)
-      previousSib.contentEditable = false;
-      previousSib.style.backgroundColor = 'white'
-    }
+  let editButtons = document.querySelectorAll('.editButton')
+  editButtons.forEach(function(editButton){
+    editButton.addEventListener('click', function (){
+      let currentEdit = this
+      let previousSib = this.parentElement.previousSibling.children[1]
+      previousSib.contentEditable = true;
+      console.log(previousSib.textContent)
+      previousSib.style.backgroundColor = 'red'
+      previousSib.addEventListener('keypress', function(e){
+        if(e.key === 'Enter'){
+          let toDoIndex = Array.from(document.querySelectorAll('.toDo')).indexOf(previousSib);
+          console.log(toDoIndex)
+          current.todos[toDoIndex].text = previousSib.textContent
+          console.log(toDoIndex)
+          previousSib.contentEditable = false;
+          previousSib.style.backgroundColor = 'white'
+          console.log(current.todos)
+        }
+      })
+    })
   })
-})
  }
 function addList(){
   let newList = {
@@ -58,7 +70,6 @@ function addList(){
   render();
   document.querySelectorAll('.listNameDisplay').forEach((elm) => {
     elm.addEventListener('click',function(){
-      
       if (document.getElementsByClassName('listItemClicked').length < 1) {
       this.classList.toggle('listItemClicked')
       current = lists.find(item => item.name === this.textContent);
@@ -69,10 +80,31 @@ function addList(){
       let toDoListDiv = "";
       let checkbox = '<input type="checkbox" id="checkbox">'
       current.todos.forEach((elm) => {toDoListDiv += '<div class="toDoContainer">' +
-      '<div>' + checkbox + '<span>' + elm.text + '</span>' + '</div>' + 
-      '<span class="actionContainer"><i class="editButton fa-regular fa-pen-to-square"></i><i class="fa-solid fa-delete-left"></i></div>' + '</span>'})
-      document.querySelector('.currentToDos').innerHTML = toDoListDiv
+    '<div>' + checkbox + '<span class="toDo">' + elm.text + '</span>' + '</div>' + 
+    '<span class="actionContainer"><i class="editButton fa-regular fa-pen-to-square"></i><i class="fa-solid fa-delete-left"></i></div>' + '</span>'})
+   document.querySelector('.currentToDos').innerHTML = toDoListDiv
       document.querySelector('.toDoInput').value = ""
+      let editButtons = document.querySelectorAll('.editButton')
+      editButtons.forEach(function(editButton){
+    editButton.addEventListener('click', function (){
+      let currentEdit = this
+      let previousSib = this.parentElement.previousSibling.children[1]
+      previousSib.contentEditable = true;
+      console.log(previousSib.textContent)
+      previousSib.style.backgroundColor = 'red'
+      previousSib.addEventListener('keypress', function(e){
+        if(e.key === 'Enter'){
+          let toDoIndex = Array.from(document.querySelectorAll('.toDo')).indexOf(previousSib);
+          console.log(toDoIndex)
+          current.todos[toDoIndex].text = previousSib.textContent
+          console.log(toDoIndex)
+          previousSib.contentEditable = false;
+          previousSib.style.backgroundColor = 'white'
+          console.log(current.todos)
+        }
+      })
+    })
+    })
       }
       else {
         document.querySelector('.listItemClicked').classList.toggle('listItemClicked')
@@ -85,13 +117,31 @@ function addList(){
         let toDoListDiv = "";
         let checkbox = '<input type="checkbox" id="checkbox">'
         current.todos.forEach((elm) => {toDoListDiv += '<div class="toDoContainer">' +
-        '<div>' + checkbox + '<span>' + elm.text + '</span>' + '</div>' + 
+        '<div>' + checkbox + '<span class="toDo">' + elm.text + '</span>' + '</div>' + 
         '<span class="actionContainer"><i class="editButton fa-regular fa-pen-to-square"></i><i class="fa-solid fa-delete-left"></i></div>' + '</span>'})
         document.querySelector('.currentToDos').innerHTML = toDoListDiv
         document.querySelector('.toDoInput').value = ""
-      }
+        let editButtons = document.querySelectorAll('.editButton')
+        editButtons.forEach(function(editButton){
+        editButton.addEventListener('click', function (){
+          let currentEdit = this
+          let previousSib = this.parentElement.previousSibling.children[1]
+          previousSib.contentEditable = true;
+          previousSib.style.backgroundColor = 'red'
+          previousSib.addEventListener('keypress', function(e){
+            if(e.key === 'Enter'){
+              let toDoIndex = Array.from(document.querySelectorAll('.toDo')).indexOf(previousSib);
+              current.todos[toDoIndex].text = previousSib.textContent
+              previousSib.contentEditable = false;
+              previousSib.style.backgroundColor = 'white'
+              console.log(current.todos)
+            }
+          })
+        })
+      })
+        }
+      })
     })
-  })
 }
 
 
