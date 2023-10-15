@@ -82,10 +82,13 @@ header {
 .listNameDisplay {
     background-color: #d6d6d6;
     padding: 15px;
-    overflow: scroll;
+    display: flex;
+    justify-content: space-between;
+    overflow-x:hidden;
+    overflow-y:scroll;
 }
-.listNameDisplay :hover{
-    background-color: #272727;
+.listContainer :hover{
+    background-color: rgb(173, 173, 173);
 }
 .listItemClicked {
     background-color: #929292;
@@ -124,4 +127,10 @@ header {
 }
 .complete{
     background-color: rgb(56, 189, 109);
+}
+.nameList {
+    display: inline;
+}
+.listEditButton{
+    padding-right: 7px;
 }
